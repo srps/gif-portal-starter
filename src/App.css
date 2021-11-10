@@ -66,7 +66,7 @@
 }
 
 .footer-container {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   position: absolute;
@@ -74,6 +74,17 @@
   bottom: 0;
   left: 0;
   padding-bottom: 45px;
+}
+
+.my-footer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0px;
+  padding-bottom: 25px;
 }
 
 .twitter-logo {
@@ -85,6 +96,10 @@
   color: white;
   font-size: 16px;
   font-weight: bold;
+}
+
+.footer-text + .footer-text {
+  margin-left: 10px;
 }
 
 .gif-grid {
