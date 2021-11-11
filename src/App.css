@@ -1,6 +1,6 @@
 .App {
   height: 100vh;
-  background-color: #1a202c;
+  background-color: #0a2b3a;
   overflow: scroll;
   text-align: center;
 }
@@ -73,7 +73,7 @@
   width: 100%;
   bottom: 0;
   left: 0;
-  padding-bottom: 45px;
+  padding-bottom: 35px;
 }
 
 .my-footer-container {
