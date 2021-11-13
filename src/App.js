@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import twitterLogo from "./assets/twitter-logo.svg";
+import { Connection, PublicKey, clusterApiUrl } from "@solana/web3.js";
+import { Program, Provider, web3 } from "@project-serum/anchor";
 import "./App.css";
+import idl from "./idl.json";
 
 // Constants
 const MY_TWITTER_HANDLE = "serj_mig";
@@ -16,6 +19,18 @@ const TEST_GIFS = [
   "https://media.giphy.com/media/Qtuw7rqoeSxwlzUHp2/giphy.gif",
   "https://media.giphy.com/media/cNrHE8vu2T5lQ1Wz3t/giphy.gif",
 ];
+
+const { SystemProgram, Keypair } = web3;
+
+let baseAccount = Keypair.generate();
+
+const ProgramID = new PublicKey(idl.metadata.address);
+
+const network = clusterApiUrl("devnet");
+
+const opts = {
+  preflightCommitment: "processed",
+};
 
 const App = () => {
   const buildLink = (handle) => `https://twitter.com/${handle}`;
@@ -110,6 +125,16 @@ const App = () => {
 
   const onInputChange = (event) => {
     setInputValue(event.target.value);
+  };
+
+  const getProvider = () => {
+    const connection = new Connection(network, opts.preflightCommitment);
+    const provider = new Provider(
+      connection,
+      window.solana,
+      opts.preflightCommitment
+    );
+    return provider;
   };
 
   useEffect(() => {
