@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import twitterLogo from "./assets/twitter-logo.svg";
 import { Connection, PublicKey, clusterApiUrl } from "@solana/web3.js";
 import { Program, Provider, web3 } from "@project-serum/anchor";
+import toast, { Toaster } from "react-hot-toast";
 import "./App.css";
 import idl from "./idl.json";
 
@@ -209,6 +210,7 @@ const App = () => {
   return (
     <div className="App">
       <div className={walletAddress ? "authed-container" : "container"}>
+        <Toaster />
         <div className="header-container">
           <p className="header">🖼 Bluey GIF Portal</p>
           <p className="sub-text">
