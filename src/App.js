@@ -9,17 +9,6 @@ import idl from "./idl.json";
 // Constants
 const MY_TWITTER_HANDLE = "serj_mig";
 const TWITTER_HANDLE = "_buildspace";
-const TEST_GIFS = [
-  "https://media.giphy.com/media/hpw1SJwOIMdrOCGlqU/giphy.gif",
-  "https://media.giphy.com/media/WOBm5UtSIcoYUoImom/giphy.gif",
-  "https://media.giphy.com/media/dxIZUFBsWRWKG8vnoB/giphy.gif",
-  "https://media.giphy.com/media/kcknoz0ZnVCjSvktZe/giphy.gif",
-  "https://media.giphy.com/media/j5hRw3cDetz3jrXHLp/giphy.gif",
-  "https://media.giphy.com/media/l1NYpaKni2cTmT0oH7/giphy.gif",
-  "https://media.giphy.com/media/fSpUg2o4sgF4AIlr6z/giphy.gif",
-  "https://media.giphy.com/media/Qtuw7rqoeSxwlzUHp2/giphy.gif",
-  "https://media.giphy.com/media/cNrHE8vu2T5lQ1Wz3t/giphy.gif",
-];
 
 const { SystemProgram, Keypair } = web3;
 
@@ -94,7 +83,7 @@ const App = () => {
         `Created a new BaseAccount w/ address:${baseAccount.publicKey.toString()}`
       );
       await getGifs();
-      
+
       console.log(`📝 Your transaction signature ${tx}`);
     } catch (err) {
       console.log(`Error creating BaseAccount for account: ${err}`);
@@ -104,8 +93,25 @@ const App = () => {
   const sendGif = async () => {
     if (inputValue.length > 0) {
       console.log(`Gif URL: ${inputValue}`);
-      TEST_GIFS.push(inputValue);
-      setInputValue("");
+
+      try {
+        const provider = getProvider();
+        const program = new Program(idl, programID, provider);
+        const tx = await program.rpc.addGif(inputValue, {
+          accounts: {
+            baseAccount: baseAccount.publicKey,
+            user: provider.wallet.publicKey,
+          },
+        });
+        
+        await getGifs();
+        toast(`Gif added successfully`);
+        setInputValue("");
+
+      } catch (err) {
+        toast(`😢 Error adding Gif`)
+        console.error(err);
+      }
     } else {
       console.log("No gif URL provided");
     }
