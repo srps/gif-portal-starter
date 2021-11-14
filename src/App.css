@@ -1,6 +1,7 @@
 .App {
+  font-family: 'EuclidCircular', sans-serif;
   height: 100vh;
-  background-color: #0a2b3a;
+  background-color: #082330;
   overflow: scroll;
   text-align: center;
 }
@@ -21,15 +22,23 @@
 }
 
 .header {
+  font-family: 'EuclidCircular', sans-serif;
   margin: 0;
   font-size: 50px;
   font-weight: bold;
   color: white;
+  text-shadow: 0 0 80px rgb(192 219 255 / 35%), 0 0 32px rgb(65 120 255 / 23%);
 }
 
 .sub-text {
+  font-family: 'Inter', sans-serif;
   font-size: 25px;
   color: white;
+  text-shadow: 0 0 80px rgb(192 219 255 / 35%), 0 0 32px rgb(65 120 255 / 23%);
+}
+
+.text-glow {
+  text-shadow: 0 0 80px rgb(192 219 255 / 35%), 0 0 32px rgb(65 120 255 / 23%);
 }
 
 .gradient-text {
@@ -40,6 +49,7 @@
 }
 
 .cta-button {
+  font-family: 'Inter', sans-serif;
   height: 45px;
   border: 0;
   width: auto;
@@ -53,6 +63,7 @@
 }
 
 .connect-wallet-button {
+  font-family: 'Inter', sans-serif;
   background: -webkit-linear-gradient(left, #60c657, #35aee2);
   background-size: 200% 200%;
   animation: gradient-animation 4s ease infinite;
@@ -66,6 +77,7 @@
 }
 
 .footer-container {
+  font-family: 'Inter', sans-serif;
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -77,6 +89,7 @@
 }
 
 .my-footer-container {
+  font-family: 'Inter', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -93,6 +106,7 @@
 }
 
 .footer-text {
+  font-family: 'Inter', sans-serif;
   color: white;
   font-size: 16px;
   font-weight: bold;
