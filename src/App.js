@@ -24,7 +24,7 @@ const { SystemProgram, Keypair } = web3;
 
 let baseAccount = Keypair.generate();
 
-const ProgramID = new PublicKey(idl.metadata.address);
+const programID = new PublicKey(idl.metadata.address);
 
 const network = clusterApiUrl("devnet");
 
@@ -78,7 +78,7 @@ const App = () => {
   const createGifAccount = async () => {
     try {
       const provider = getProvider();
-      const program = new Program(idl, ProgramID, provider);
+      const program = new Program(idl, programID, provider);
 
       const tx = await program.rpc.startStuffOff({
         accounts: {
@@ -89,11 +89,14 @@ const App = () => {
         signers: [baseAccount],
       });
 
+      console.log(
+        `Created a new BaseAccount w/ address:${baseAccount.publicKey.toString()}`
+      );
       await getGifs();
-
+      
       console.log(`📝 Your transaction signature ${tx}`);
     } catch (err) {
-      console.log(`Error creating BaseAccount for account: ${err}`)
+      console.log(`Error creating BaseAccount for account: ${err}`);
     }
   };
 
@@ -181,8 +184,7 @@ const App = () => {
   const getGifs = useCallback(async () => {
     try {
       const provider = getProvider();
-      const program = new Program(idl, ProgramID, provider);
-      console.log(program.account.baseAccount);
+      const program = new Program(idl, programID, provider);
       const account = await program.account.baseAccount.fetch(
         baseAccount.publicKey
       );
