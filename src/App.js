@@ -5,6 +5,7 @@ import { Program, Provider, web3 } from "@project-serum/anchor";
 import toast, { Toaster } from "react-hot-toast";
 import "./App.css";
 import idl from "./idl.json";
+import keypair from "./keypair.json"
 
 // Constants
 const MY_TWITTER_HANDLE = "serj_mig";
@@ -12,7 +13,9 @@ const TWITTER_HANDLE = "_buildspace";
 
 const { SystemProgram, Keypair } = web3;
 
-let baseAccount = Keypair.generate();
+const secretArr = Object.values(keypair._keypair.secretKey);
+const uInt8Secret = new Uint8Array(secretArr);
+let baseAccount = Keypair.fromSecretKey(uInt8Secret);
 
 const programID = new PublicKey(idl.metadata.address);
 
@@ -103,7 +106,7 @@ const App = () => {
             user: provider.wallet.publicKey,
           },
         });
-        
+        console.log(`📝 Your transaction signature ${tx}`);
         await getGifs();
         toast(`Gif added successfully`);
         setInputValue("");
