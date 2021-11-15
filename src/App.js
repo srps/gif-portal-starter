@@ -128,6 +128,26 @@ const App = () => {
     }
   };
 
+  const removeGif = async (gif) => {
+    if (gif) {
+      try {
+        const provider = getProvider();
+        const program = new Program(idl, programID, provider);
+        const tx = await program.rpc.removeGif(gif.gifLink, {
+          accounts: {
+            baseAccount: baseAccount.publicKey,
+            user: provider.wallet.publicKey,
+          },
+        });
+        await getGifs();
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      toast(`Invalid Gif`);
+    }
+  };
+
   const renderNotConnectedContainer = () => (
     <button
       className="cta-button connect-wallet-button"
@@ -173,11 +193,27 @@ const App = () => {
               <div className="gif-container">
                 <img src={gif.gifLink} alt="gif" />
               </div>
-              <div className="card-text">
-                <span className="card-text-label">Submitted by </span>
-                <a href={buildSolanaAccountLink(gif.userAddress)} className = "card-text-label">
-                  {shortenAddress(gif.userAddress.toString())}
-                </a>
+              <div>
+                <div className="card-text">
+                  <span className="card-text-label">Submitted by </span>
+                  <a
+                    href={buildSolanaAccountLink(gif.userAddress)}
+                    className="card-text-label"
+                  >
+                    {shortenAddress(gif.userAddress.toString())}
+                  </a>
+                </div>
+                {console.log(gif)}
+                <button
+                  type="button"
+                  className="cta-button submit-gif-button"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    removeGif(gif);
+                  }}
+                >
+                  Remove
+                </button>
               </div>
             </div>
           ))}
