@@ -5,7 +5,7 @@ import { Program, Provider, web3 } from "@project-serum/anchor";
 import toast, { Toaster } from "react-hot-toast";
 import "./App.css";
 import idl from "./idl.json";
-import keypair from "./keypair.json"
+import keypair from "./keypair.json";
 
 // Constants
 const MY_TWITTER_HANDLE = "serj_mig";
@@ -26,7 +26,16 @@ const opts = {
 };
 
 const App = () => {
-  const buildLink = (handle) => `https://twitter.com/${handle}`;
+  const buildTwitterLink = (handle) => `https://twitter.com/${handle}`;
+  const buildSolanaAccountLink = (account) =>
+    `https://explorer.solana.com/address/${account}`;
+  const shortenAddress = (address) => {
+    if (address && address.length > 15) {
+      return (
+        address.substring(0, 5) + "..." + address.substring(address.length - 5)
+      );
+    }
+  };
 
   const [walletAddress, setWalletAddress] = useState(null);
   const [inputValue, setInputValue] = useState("");
@@ -110,9 +119,8 @@ const App = () => {
         await getGifs();
         toast(`Gif added successfully`);
         setInputValue("");
-
       } catch (err) {
-        toast(`😢 Error adding Gif`)
+        toast(`😢 Error adding Gif`);
         console.error(err);
       }
     } else {
@@ -161,8 +169,16 @@ const App = () => {
         </form>
         <div className="gif-grid">
           {gifs.map((gif, index) => (
-            <div className="gif-container" key={index}>
-              <img src={gif.gifLink} alt="gif" />
+            <div className="card-container" key={index}>
+              <div className="gif-container">
+                <img src={gif.gifLink} alt="gif" />
+              </div>
+              <div className="card-text">
+                <span className="card-text-label">Submitted by </span>
+                <a href={buildSolanaAccountLink(gif.userAddress)} className = "card-text-label">
+                  {shortenAddress(gif.userAddress.toString())}
+                </a>
+              </div>
             </div>
           ))}
         </div>
@@ -232,13 +248,13 @@ const App = () => {
           <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
           <a
             className="footer-text"
-            href={buildLink(TWITTER_HANDLE)}
+            href={buildTwitterLink(TWITTER_HANDLE)}
             target="_blank"
             rel="noreferrer"
           >{`built on @${TWITTER_HANDLE}`}</a>
           <a
             className="footer-text"
-            href={buildLink(MY_TWITTER_HANDLE)}
+            href={buildTwitterLink(MY_TWITTER_HANDLE)}
             target="_blank"
             rel="noreferrer"
           >{` by @${MY_TWITTER_HANDLE}`}</a>
