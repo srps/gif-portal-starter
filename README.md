@@ -1,10 +1,15 @@
 # buildspace Solana GIF Portal Project
 
-### **Welcome 👋**
-To get started with this course, clone this repo and follow these commands:
+### Environment Setup
+1. Install Node from https://nodejs.org/en/
 
-1. Run `npm install` at the root of your directory
-2. Run `npm run start` to start the project
+### Build and start the project
+1. Go to the root of your directory
+2. Run the following commands
+```diff
+$ npm install
+$ npm run start
+```
 3. Start coding!
 
 ### **What is the .vscode Folder?**
