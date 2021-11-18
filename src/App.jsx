@@ -6,6 +6,9 @@ import toast, { Toaster } from "react-hot-toast";
 import "./App.css";
 import idl from "./idl.json";
 import keypair from "./keypair.json";
+import { isURL } from "validator";
+
+require("@solana/wallet-adapter-react-ui/styles.css");
 
 // Constants
 const MY_TWITTER_HANDLE = "serj_mig";
@@ -77,6 +80,15 @@ const App = () => {
     }
   };
 
+  const disconnectWallet = async () => {
+    const { solana } = window;
+
+    if (solana) {
+      await solana.disconnect();
+      setWalletAddress(null);
+    }
+  };
+
   const createGifAccount = async () => {
     try {
       const provider = getProvider();
@@ -103,7 +115,7 @@ const App = () => {
   };
 
   const sendGif = async () => {
-    if (inputValue.length > 0) {
+    if (/\.gif$/.test(inputValue) && isURL(inputValue)) {
       console.log(`Gif URL: ${inputValue}`);
 
       try {
@@ -124,7 +136,7 @@ const App = () => {
         console.error(err);
       }
     } else {
-      console.log("No gif URL provided");
+      toast("No or invalid gif URL provided");
     }
   };
 
@@ -161,6 +173,12 @@ const App = () => {
     gifs === null ? (
       <div className="connected-container">
         <button
+          className="cta-button connect-wallet-button"
+          onClick={disconnectWallet}
+        >
+          Disconnect Wallet
+        </button>
+        <button
           type="submit"
           className="cta-button submit-gif-button"
           onClick={createGifAccount}
@@ -170,6 +188,12 @@ const App = () => {
       </div>
     ) : (
       <div className="connected-container">
+        <button
+          className="cta-button connect-wallet-button"
+          onClick={disconnectWallet}
+        >
+          Disconnect Wallet
+        </button>
         <form
           className="form"
           onSubmit={(event) => {
