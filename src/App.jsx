@@ -7,6 +7,7 @@ import "./App.css";
 import idl from "./idl.json";
 import keypair from "./keypair.json";
 import { isURL } from "validator";
+import { Wallet } from "./components/Wallets";
 
 require("@solana/wallet-adapter-react-ui/styles.css");
 
